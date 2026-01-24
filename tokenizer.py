@@ -111,6 +111,8 @@ def main():
                 enc = tiktoken.get_encoding("cl100k_base")
                 tokens = enc.encode(input_text)
                 res["count"] = len(tokens)
+                # Decode each token ID back to its string representation
+                res["tokens"] = [enc.decode([t]) for t in tokens]
 
             elif model == "llama":
                 try:
@@ -124,6 +126,8 @@ def main():
                     tokenizer.deprecation_warnings = False
                     tokens = tokenizer.encode(input_text, add_special_tokens=False)
                     res["count"] = len(tokens)
+                    # Convert token IDs to their string representations
+                    res["tokens"] = tokenizer.convert_ids_to_tokens(tokens)
                 except Exception as e:
                     print(f"Llama Error: {e}", file=sys.stderr)
                     continue
@@ -142,6 +146,8 @@ def main():
                     tokenizer.deprecation_warnings = False
                     tokens = tokenizer.encode(input_text, add_special_tokens=False)
                     res["count"] = len(tokens)
+                    # Convert token IDs to their string representations
+                    res["tokens"] = tokenizer.convert_ids_to_tokens(tokens)
                 except Exception as e:
                     print(f"DeepSeek Error: {e}", file=sys.stderr)
                     continue
@@ -153,9 +159,11 @@ def main():
 
     for r in results:
         print(f"Model: {r['model']}")
-        print(f"Tokens: {r['count']}")
-        print(f"Chars: {r['chars']}")
-        print("-" * 20)
+        print(f"Token Count: {r['count']}")
+        print(f"Char Count: {r['chars']}")
+        if "tokens" in r:
+            print(f"Tokens: {r['tokens']}")
+        print("-" * 40)
 
 if __name__ == "__main__":
     main()

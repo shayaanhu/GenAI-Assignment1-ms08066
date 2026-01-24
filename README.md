@@ -44,11 +44,12 @@ Select a model:
   3. DeepSeek (Coder 1.3B)
   4. Compare all models
 
-Enter choice (1-4): 1
+Enter choice (1-4): 1 
 
 Enter your text: Hello World!
 Model: gpt4
-Tokens: 3
-Chars: 12
---------------------
+Token Count: 3
+Char Count: 12
+Tokens: ['Hello', ' World', '!']
+----------------------------------------
 ```
